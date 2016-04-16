@@ -38,6 +38,9 @@ public class TrackingRange
         } else if ( entity instanceof EntityItemFrame || entity instanceof EntityPainting || entity instanceof EntityItem || entity instanceof EntityXPOrb )
         {
             range = config.miscTrackingRange;
+        } else if ( entity.activationType == 4)
+        {
+            range = config.miscTrackingRange;
         }
         // Cauldron start - allow for 0 to disable tracking ranges
         if (range == 0)

@@ -44,6 +44,7 @@ public class ActivationRange
     static AxisAlignedBB miscBB = AxisAlignedBB.getBoundingBox( 0, 0, 0, 0, 0, 0 );
     static AxisAlignedBB animalBB = AxisAlignedBB.getBoundingBox( 0, 0, 0, 0, 0, 0 );
     static AxisAlignedBB monsterBB = AxisAlignedBB.getBoundingBox( 0, 0, 0, 0, 0, 0 );
+    static AxisAlignedBB bossBB = AxisAlignedBB.getBoundingBox( 0, 0, 0, 0, 0, 0 );//Thermos - Attempt to handle https://github.com/TCPR/Thermos/issues/301
 
     /**
      * Initializes an entities type on construction to specify what group this
@@ -64,6 +65,10 @@ public class ActivationRange
         {
             return 2; // Animal
         // Cauldron end
+            //thermos start - Attempt to handle https://github.com/TCPR/Thermos/issues/301
+        } else if ( entity instanceof EntityDragon || entity instanceof  EntityWither )
+        {
+            return 4;//thermos end
         } else
         {
             return 3; // Misc
@@ -93,6 +98,7 @@ public class ActivationRange
         if ( ( entity.activationType == 3 && config.miscActivationRange == 0 )
                 || ( entity.activationType == 2 && config.animalActivationRange == 0 )
                 || ( entity.activationType == 1 && config.monsterActivationRange == 0 )
+                || ( entity.activationType == 4 && config.bossActivationRange == 0 )//Thermos - Attempt to handle https://github.com/TCPR/Thermos/issues/301
                 || (entity instanceof EntityPlayer && !(entity instanceof FakePlayer)) // Cauldron
                 || entity instanceof EntityThrowable
                 || entity instanceof EntityDragon
@@ -108,7 +114,7 @@ public class ActivationRange
                 // Cauldron start - force ticks for entities with superclass of Entity and not a creature/monster
                 || (entity.getClass().getSuperclass() == Entity.class && !entity.isCreatureType(EnumCreatureType.creature, false)
                 && !entity.isCreatureType(EnumCreatureType.ambient, false) && !entity.isCreatureType(EnumCreatureType.monster, false)
-                && !entity.isCreatureType(EnumCreatureType.waterCreature, false)))
+                && !entity.isCreatureType(EnumCreatureType.waterCreature, false)) )
         {
             return true;
         }
@@ -149,6 +155,7 @@ public class ActivationRange
         final int miscActivationRange = world.getSpigotConfig().miscActivationRange;
         final int animalActivationRange = world.getSpigotConfig().animalActivationRange;
         final int monsterActivationRange = world.getSpigotConfig().monsterActivationRange;
+        final int bossActivationRange = world.getSpigotConfig().bossActivationRange;//Thermos - Attempt to handle https://github.com/TCPR/Thermos/issues/301
         // Cauldron end
 
         int maxRange = Math.max( monsterActivationRange, animalActivationRange );
@@ -163,6 +170,7 @@ public class ActivationRange
             growBB( miscBB, player.boundingBox, miscActivationRange, 256, miscActivationRange );
             growBB( animalBB, player.boundingBox, animalActivationRange, 256, animalActivationRange );
             growBB( monsterBB, player.boundingBox, monsterActivationRange, 256, monsterActivationRange );
+            growBB( bossBB, player.boundingBox, bossActivationRange, 256, bossActivationRange);//Thermos - Attempt to handle https://github.com/TCPR/Thermos/issues/301
 
             int i = MathHelper.floor_double( maxBB.minX / 16.0D );
             int j = MathHelper.floor_double( maxBB.maxX / 16.0D );
@@ -216,6 +224,11 @@ public class ActivationRange
                             }
                             break;
                         case 3:
+                        case 4://thermos start
+                            if ( bossBB.intersectsWith( entity.boundingBox ) )
+                            {
+                                entity.activatedTick = MinecraftServer.currentTick;
+                            }
                         default:
                             if ( miscBB.intersectsWith( entity.boundingBox ) )
                             {

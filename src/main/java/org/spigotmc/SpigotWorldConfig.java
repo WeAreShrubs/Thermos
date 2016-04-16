@@ -143,12 +143,14 @@ public class SpigotWorldConfig
     public int animalActivationRange = 32;
     public int monsterActivationRange = 32;
     public int miscActivationRange = 16;
+    public int bossActivationRange = 128;//Thermos - Attempt to handle https://github.com/TCPR/Thermos/issues/301
     private void activationRange()
     {
         animalActivationRange = getInt( "entity-activation-range.animals", animalActivationRange );
         monsterActivationRange = getInt( "entity-activation-range.monsters", monsterActivationRange );
         miscActivationRange = getInt( "entity-activation-range.misc", miscActivationRange );
-        log( "Entity Activation Range: An " + animalActivationRange + " / Mo " + monsterActivationRange + " / Mi " + miscActivationRange );
+        bossActivationRange = getInt( "entity-activation-range.bosses", bossActivationRange );//Thermos - Attempt to handle https://github.com/TCPR/Thermos/issues/301
+        log( "Entity Activation Range: An " + animalActivationRange + " / Mo " + monsterActivationRange + " / Mi " + miscActivationRange + " / Bos s" );
     }
 
     public int playerTrackingRange = 48;
@@ -156,6 +158,7 @@ public class SpigotWorldConfig
     public int monsterTrackingRange = 48;
     public int miscTrackingRange = 32;
     public int maxTrackingRange = 64;
+    public int bossTrackingRange = 64;
     private void trackingRange()
     {
         playerTrackingRange = getInt( "entity-tracking-range.players", playerTrackingRange );
@@ -163,7 +166,8 @@ public class SpigotWorldConfig
         monsterTrackingRange = getInt( "entity-tracking-range.monsters", monsterTrackingRange );
         miscTrackingRange = getInt( "entity-tracking-range.misc", miscTrackingRange );
         maxTrackingRange = getInt( "entity-tracking-range.other", maxTrackingRange );
-        log( "Entity Tracking Range: Pl " + playerTrackingRange + " / An " + animalTrackingRange + " / Mo " + monsterTrackingRange + " / Mi " + miscTrackingRange + " / Other " + maxTrackingRange );
+        bossTrackingRange = getInt( "entity-tracking-range.boss", bossTrackingRange );//Thermos - Attempt to handle https://github.com/TCPR/Thermos/issues/301
+        log( "Entity Tracking Range: Pl " + playerTrackingRange + " / An " + animalTrackingRange + " / Mo " + monsterTrackingRange + " / Mi " + miscTrackingRange + " / Other " + maxTrackingRange + " / Boss " + bossTrackingRange );//Thermos - Attempt to handle https://github.com/TCPR/Thermos/issues/301
     }
 
     public int hopperTransfer = 8;
