@@ -150,7 +150,7 @@ public class SpigotWorldConfig
         monsterActivationRange = getInt( "entity-activation-range.monsters", monsterActivationRange );
         miscActivationRange = getInt( "entity-activation-range.misc", miscActivationRange );
         bossActivationRange = getInt( "entity-activation-range.bosses", bossActivationRange );//Thermos - Attempt to handle https://github.com/TCPR/Thermos/issues/301
-        log( "Entity Activation Range: An " + animalActivationRange + " / Mo " + monsterActivationRange + " / Mi " + miscActivationRange + " / Bos s" );
+        log( "Entity Activation Range: An " + animalActivationRange + " / Mo " + monsterActivationRange + " / Mi " + miscActivationRange + " / Boss" + bossActivationRange );//Thermos - Attempt to handle https://github.com/TCPR/Thermos/issues/301
     }
 
     public int playerTrackingRange = 48;
