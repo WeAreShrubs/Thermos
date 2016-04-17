@@ -9,23 +9,7 @@
  /**
   * Represents a world, which may contain entities, chunks and blocks
   */
-@@ -120,7 +122,14 @@
-      * @return Chunk at the given location
-      */
-     public Chunk getChunkAt(Location location);
--
-+    //PaperSpigot start - Async Chunk Load API
-+    public static interface ChunkLoadCallback {
-+        public void onLoad(Chunk chunk);
-+    }
-+    public void getChunkAtAsync(int x, int z, ChunkLoadCallback cb);
-+    public void getChunkAtAsync(Location location, ChunkLoadCallback cb);
-+    public void getChunkAtAsync(Block block, ChunkLoadCallback cb);
-+    //PaperSpigot end
-     /**
-      * Gets the {@link Chunk} that contains the given {@link Block}
-      *
-@@ -1155,6 +1164,56 @@
+@@ -1155,6 +1157,56 @@
       */
      public boolean isGameRule(String rule);
  
@@ -82,7 +66,7 @@
      /**
       * Represents various map environment types that a world may be
       */
-@@ -1203,10 +1262,18 @@
+@@ -1203,10 +1255,18 @@
              return lookup.get(id);
          }
  
