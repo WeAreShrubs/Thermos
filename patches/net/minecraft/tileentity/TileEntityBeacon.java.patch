@@ -52,7 +52,7 @@
      private static final String __OBFID = "CL_00000339";
  
      public void updateEntity()
-@@ -60,15 +98,26 @@
+@@ -60,20 +98,37 @@
              Iterator iterator = list.iterator();
              EntityPlayer entityplayer;
  
@@ -83,7 +83,19 @@
  
                  while (iterator.hasNext())
                  {
-@@ -343,7 +392,7 @@
+                     entityplayer = (EntityPlayer)iterator.next();
+-                    entityplayer.addPotionEffect(new PotionEffect(this.secondaryEffect, 180, 0, true));
++                    //PaperSpigot Start - BeaconEffectEvent
++                    BeaconEffectEvent event = new BeaconEffectEvent(block, secondaryEffect, (Player) entityplayer.getBukkitEntity(), false);
++                    if (CraftEventFactory.callEvent(event).isCancelled()) continue;
++
++                    org.bukkit.potion.PotionEffect effect = event.getEffect();
++                    entityplayer.addPotionEffect(new PotionEffect(effect.getType().getId(), effect.getDuration(), effect.getAmplifier(), effect.isAmbient()));
++                    //PaperSpigot end
+                 }
+             }
+         }
+@@ -343,7 +398,7 @@
  
      public int getInventoryStackLimit()
      {
