@@ -37,7 +37,7 @@ public class BaseComponentSerializer {
             component.setObfuscated(object.get("obfuscated").getAsBoolean());
         }
         if (object.has("extra")) {
-            component.setExtra(Arrays.asList((Object[])context.deserialize(object.get("extra"), BaseComponent[].class)));
+            component.setExtra(Arrays.<BaseComponent>asList((BaseComponent[]) context.deserialize(object.get("extra"), BaseComponent[].class)));
         }
         if (object.has("clickEvent")) {
             event = object.getAsJsonObject("clickEvent");
